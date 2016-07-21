@@ -1,12 +1,20 @@
 <template>
-  <div class="vux-header">
-    <div class="vux-header-left">
-      <a class="vux-header-back" @click.preventDefault v-show="leftOptions.showBack" @click="onClickBack">{{leftOptions.backText}}</a>
+  <div class="x-header">
+    <div class="x-header-left">
+      <!-- back -->
+      <a class="x-header-back" @click.preventDefault v-show="leftOptions.showBack" @click="onClickBack">{{leftOptions.backText}}</a>
+
       <slot name="left"></slot>
     </div>
-    <h1 class="vux-header-title"><slot></slot></h1>
-    <div class="vux-header-right">
-      <a class="vux-header-more" @click.preventDefault @click="$emit('on-click-more')" v-if="rightOptions.showMore"></a>
+    <h1 class="x-header-title"><slot></slot></h1>
+    <div class="x-header-right">
+
+      <!-- more -->
+      <!-- <a class="x-header-more" @click.preventDefault @click="$emit('on-click-more')" v-if="rightOptions.showMore"></a> -->
+
+      <!-- refresh -->
+      <a class="x-header-refresh" @click.preventDefault v-show="rightOptions.showRefresh" @click="onClickRefresh"><img src="/static/images/app/x-header/refresh2.png" width="26px" style="vertical-align:top"></a>
+
       <slot name="right"></slot>
     </div>
   </div>
@@ -20,6 +28,7 @@ export default {
       default () {
         return {
           showBack: true,
+          // showUserinfo: false,
           backText: 'Back',
           preventGoBack: false
         }
@@ -29,7 +38,9 @@ export default {
       type: Object,
       default () {
         return {
-          showMore: false
+          showMore: false,
+          showRefresh: false,
+          refreshLink: ""
         }
       }
     }
@@ -37,23 +48,27 @@ export default {
   methods: {
     onClickBack () {
       if (this.leftOptions.preventGoBack) {
-        this.$emit('on-click-back')
+        this.$emit('my-click-back')
       } else {
         history.back()
       }
+    },
+
+    onClickRefresh () {
+      this.$emit('on-click-refresh')
     }
   }
 }
 </script>
 
 <style>
-.vux-header {
+.x-header {
   position: relative;
   padding: 3px 0;
   box-sizing: border-box;
-  background-color: #35495e;
+  background-color: black;
 }
-.vux-header .vux-header-title,.vux-header h1 {
+.x-header .x-header-title,.x-header h1 {
   margin: 0 88px;
   margin-left: 100px;
   line-height: 40px;
@@ -67,10 +82,10 @@ export default {
   white-space: nowrap;
   color: #fff
 }
-.vux-header .vux-header-title a,.vux-header .vux-header-title a:active,.vux-header h1 a,.vux-header h1 a:active {
+.x-header .x-header-title a,.x-header .x-header-title a:active,.x-header h1 a,.x-header h1 a:active {
   color: #fff
 }
-.vux-header .vux-header-left,.vux-header .vux-header-right {
+.x-header .x-header-left,.x-header .x-header-right {
   position: absolute;
   top: 14px;
   display: block;
@@ -78,21 +93,21 @@ export default {
   line-height: 21px;
   color: #ccc
 }
-.vux-header .vux-header-left a,.vux-header .vux-header-left button,.vux-header .vux-header-right a,.vux-header .vux-header-right button {
+.x-header .x-header-left a,.x-header .x-header-left button,.x-header .x-header-right a,.x-header .x-header-right button {
   float: left;
   margin-right: 8px;
   color: #ccc
 }
-.vux-header .vux-header-left a:active,.vux-header .vux-header-left button:active,.vux-header .vux-header-right a:active,.vux-header .vux-header-right button:active {
+.x-header .x-header-left a:active,.x-header .x-header-left button:active,.x-header .x-header-right a:active,.x-header .x-header-right button:active {
   opacity: .5
 }
-.vux-header .vux-header-left {
+.x-header .x-header-left {
   left: 18px
 }
-.vux-header .vux-header-left .vux-header-back {
+.x-header .x-header-left .x-header-back {
   padding-left: 16px
 }
-.vux-header .vux-header-left .vux-header-back:before {
+.x-header .x-header-left .x-header-back:before {
   content: "";
   position: absolute;
   display: block;
@@ -106,14 +121,14 @@ export default {
   margin-top: 1px;
   transform: rotate(315deg)
 }
-.vux-header .vux-header-right {
+.x-header .x-header-right {
   right: 15px
 }
-.vux-header .vux-header-right a,.vux-header .vux-header-right button {
+.x-header .x-header-right a,.x-header .x-header-right button {
   margin-left: 8px;
   margin-right: 0
 }
-.vux-header .vux-header-right .vux-header-more:after {
+.x-header .x-header-right .x-header-more:after {
   content: "\2022\0020\2022\0020\2022\0020";
   font-size: 16px;
 }

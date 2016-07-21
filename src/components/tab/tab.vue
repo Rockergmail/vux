@@ -61,7 +61,6 @@ export default {
   watch: {
     index (newIndex, oldIndex) {
       this.direction = newIndex > oldIndex ? 'forward' : 'backward'
-      this.$emit('on-index-change', newIndex)
     }
   },
   data () {
